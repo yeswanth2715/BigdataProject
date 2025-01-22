@@ -25,16 +25,21 @@ Step 2: Prepare the Dataset
 Download and unzip the Amazon Books Reviews dataset on your local machine.
 
 Step 3: Copy the Dataset to Docker
-My container ID 422b17bd68e240f6c4c30c5554527269411314c5d6454696d596925d24b14969 and run:
+My container ID 422b17bd68e240f6c4c30c5554527269411314c5d6454696d596925d24b14969 and run to root and from root to hdfs
+Copy the File to the Docker Container: Use the docker cp command to copy the file into the container.
 
-````bash
-docker cp Books_rating.csv 3d6c17a05e33:/home/datasrc
 ````
+docker cp "E:\BDA Project\Books_rating.csv" myhadoop:/root/
+ls /root/
+````
+
 Step 4: Upload the Dataset to HDFS
 Create a directory in HDFS: I created first with home/datasrc and then proceeded with bigdatatask and added the file into the hdfs
 ````bash
 hadoop fs -mkdir -p /home/datasrc
 hadoop fs -mkdir -p /home/datasrc/bigDataTask
+hadoop fs -put /root/Books_rating.csv /home/datasrc/bigDataTask
+
 ````
 Upload the file to HDFS:
 
