@@ -119,6 +119,16 @@ hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2
     -mapper /home/scripts/mapper.py \
     -reducer /home/scripts/reducer.py \
 ````
+Submited the MapReduce Job to YARN to see the job running time
+````
+time hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2.jar \
+    -D mapreduce.job.name="FindHighestAndLowestReviewScores" \
+    -input /home/datasrc/bigDataTask/Books_rating.csv/Books_rating.csv \
+    -output /home/dataout \
+    -mapper /home/scripts/mapper.py \
+    -reducer /home/scripts/reducer.py
+````
+
 
 View the Results
 ````
