@@ -3,7 +3,7 @@ Run the following command in my terminal to pull the Hadoop Docker image:
 ````bash
 docker pull suhotayan/hadoop-spark-pig-hive:2.9.2 
 ````
-
+Step 1: Create container
 Execute the following command in the same terminal window where you pulled the image:
 ````bash
 docker run -it --name myhadoop \
@@ -13,39 +13,44 @@ docker run -it --name myhadoop \
     -p 8080:8080 -p 8081:8081 -p 10000:10000 \
     -p 9083:9083 suhotayan/hadoop-spark-pig-hive:2.9.2 bash
 ````
-
-Step 1: Create Required Directories
-Navigate to the home directory and create a new directory:
+# Use in administrator as the above ports wont be available
 ````bash
-cd home
-mkdir datasrc
+
+net stop winnat
+hdfs namenode -format
+nano ~/.bashrc
+
+export HADOOP_HOME=/usr/local/hadoop
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+source ~/.bashrc
+
 ````
 
 Step 2: Prepare the Dataset
-Download and unzip the Amazon Books Reviews dataset on your local machine.
+Download and unzip the  retail store dataset on your local machine.
 
 Step 3: Copy the Dataset to Docker
 My container ID 422b17bd68e240f6c4c30c5554527269411314c5d6454696d596925d24b14969 and run to root and from root to hdfs
 Copy the File to the Docker Container: Use the docker cp command to copy the file into the container.
 
 ````
-docker cp "E:\BDA Project\Books_rating.csv" myhadoop:/root/
+docker cp "D:\Chrome Downloads\retailstore_large\retailstore_large.csv" myhadoop:/root/
 ls /root/
 ````
 
 Step 4: Upload the Dataset to HDFS
 Create a directory in HDFS: I created first with home/datasrc and then proceeded with bigdatatask and added the file into the hdfs
 ````bash
-hadoop fs -mkdir -p /home/datasrc
 hadoop fs -mkdir -p /home/datasrc/bigDataTask
-hadoop fs -put /root/Books_rating.csv /home/datasrc/bigDataTask
+hadoop fs -put /root/retailstore_large.csv /home/datasrc/bigDataTask
 
 ````
 Upload the file to HDFS:
 
 ````bash
 
-hadoop fs -put Books_rating.csv /home/datasrc/bigDataTask
+hadoop fs -put retailstore_large.csv /home/datasrc/bigDataTask
 ````
 Verify the uploaded file:
 ````bash
