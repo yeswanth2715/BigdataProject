@@ -13,7 +13,7 @@ docker run -it --name myhadoop \
     -p 8080:8080 -p 8081:8081 -p 10000:10000 \
     -p 9083:9083 suhotayan/hadoop-spark-pig-hive:2.9.2 bash
 ````
-# Use in administrator as the above ports wont be available
+Use in administrator as the above ports wont be available
 ````bash
 
 net stop winnat
@@ -64,16 +64,16 @@ hadoop fsck /home/datasrc/bigDataTask
 ````
 
 
-## Create a directory, for instance, /home/scripts and navigate to this directory using cd /home/scripts command. Create the Mapper touch mapper.py and Reducer touch reducer.py and change their permission:
+Create a directory, for instance, /home/scripts and navigate to this directory using cd /home/scripts command. Create the Mapper touch mapper.py and Reducer touch reducer.py and change their permission:
 
 ````bash
 chmod 777 mapper.py reducer.py
 ````
-## Open mapper in nano editor:
+Open mapper in nano editor:
 ````bash
 nano mapper.py
 ````
-## Implemented a sample MapReduce job to analyze the dataset. This job calculates the minimum and maximum salaries from the dataset. The following Python scripts were used: and add the following code:
+Implemented a sample MapReduce job to analyze the dataset. This job calculates the minimum and maximum salaries from the dataset. The following Python scripts were used: and add the following code:
 ````bash
 #!/usr/bin/env python
 import sys
@@ -154,17 +154,17 @@ To view the output of reducer, better to use below syntax
 echo -e "35000\n37000\n39000\n17600" | python3 /home/scripts/reducer.py
 ````
 ````
-## Next i proceeded with Spark job e.g displaying data, filtering based on salary, and calculating average salary by country
+Next i proceeded with Spark job e.g displaying data, filtering based on salary, and calculating average salary by country
 
-## Created python file
+Created python file
 ````
 touch spark_job.py
 ````
-## To make it executable, i used chmod
+To make it executable, i used chmod
 ````
 chmod +x spark_job.py
 ````
-## entered the code with nano
+entered the code with nano
 ````
 nano spark_job.py
 ````
@@ -193,7 +193,7 @@ print(f"Lowest Salary: {lowest_salary}")
 spark.stop()
 ````
 
-## Run the job with time function
+Run the job with time function
 ````
 time spark-submit /path/to/spark_job.py
 ````
