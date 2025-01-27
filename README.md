@@ -63,7 +63,7 @@ Check the Number of Blocks
 hadoop fsck /home/datasrc/bigDataTask
 ````
 
-Finding Highest and Lowest Review Scores
+
 Create a directory, for instance, /home/scripts and navigate to this directory using cd /home/scripts command. Create the Mapper touch mapper.py and Reducer touch reducer.py and change their permission:
 ````bash
 chmod 777 mapper.py reducer.py
@@ -72,7 +72,7 @@ Open mapper in nano editor:
 ````bash
 nano mapper.py
 ````
-and add the following code:
+ implemented a sample MapReduce job to analyze the dataset. This job calculates the minimum and maximum salaries from the dataset. The following Python scripts were used: and add the following code:
 ````bash
 #!/usr/bin/env python
 import sys
@@ -148,10 +148,10 @@ Important
 
 I tested my scripts mapper.py and reducer.py locally before i submit it to the YARN, and ensure that it works as expected.
 ````
-cat /home/datasrc/bigDataTask/Books_rating.csv | python /home/scripts/mapper.py
+cat /home/datasrc/bigDataTask/retailstore_large.csv | python /home/scripts/mapper.py
 and
 
-cat /home/datasrc/bigDataTask/Books_rating.csv | python /home/scripts/reducer.py
+cat /home/datasrc/bigDataTask/retailstore_large.csv | python /home/scripts/reducer.py
 ````
 
 
