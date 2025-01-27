@@ -123,20 +123,17 @@ hadoop fs -get /home/datasrc/bigDataTask/Books_rating.csv /home/scripts/
 Submited the MapReduce Job to YARN
 ````
 hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2.jar \
-    -D mapreduce.job.name="FindHighestAndLowestReviewScores" \
-    -input /home/datasrc/bigDataTask/Books_rating.csv \
+    -D mapreduce.job.name="FindHighestAndLowestSalaries" \
+    -input /home/datasrc/bigDataTask/retailstore_large.csv \
     -output /home/dataout \
-    -mapper /home/scripts/mapper.py \
-    -reducer /home/scripts/reducer.py \
+    -mapper "python3 /home/scripts/mapper.py" \
+    -reducer "python3 /home/scripts/reducer.py"
 ````
 Submited the MapReduce Job to YARN to see the job running time
 ````
-time hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2.jar \
-    -D mapreduce.job.name="FindHighestAndLowestReviewScores" \
-    -input /home/datasrc/bigDataTask/Books_rating.csv/Books_rating.csv \
-    -output /home/dataout \
-    -mapper /home/scripts/mapper.py \
-    -reducer /home/scripts/reducer.py
+time hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2.jar -D mapreduce.job.name="FindHighestAndLowestSalaries" -input /home/datasrc/bigDataTask/retailstore_large.csv -output /home/dataout -mapper "python3 /home/scripts/mapper.py" -reducer "python3 /home/scripts/reducer.py"
+
+
 ````
 
 
