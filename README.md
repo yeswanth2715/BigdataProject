@@ -64,30 +64,32 @@ hadoop fsck /home/datasrc/bigDataTask
 ````
 
 
-Create a directory, for instance, /home/scripts and navigate to this directory using cd /home/scripts command. Create the Mapper touch mapper.py and Reducer touch reducer.py and change their permission:
+## Create a directory, for instance, /home/scripts and navigate to this directory using cd /home/scripts command. Create the Mapper touch mapper.py and Reducer touch reducer.py and change their permission:
+
 ````bash
 chmod 777 mapper.py reducer.py
 ````
-Open mapper in nano editor:
+## Open mapper in nano editor:
 ````bash
 nano mapper.py
 ````
- implemented a sample MapReduce job to analyze the dataset. This job calculates the minimum and maximum salaries from the dataset. The following Python scripts were used: and add the following code:
+## Implemented a sample MapReduce job to analyze the dataset. This job calculates the minimum and maximum salaries from the dataset. The following Python scripts were used: and add the following code:
 ````bash
 #!/usr/bin/env python
 import sys
 import csv
+
 for line in sys.stdin:
     try:
         reader = csv.reader([line])
         for row in reader:
-            review_score = row[6]
-
-            if review_score:
-                print('{0}'.format(review_score))
+            salary = row[2]  # Assuming column 2 contains the salary
+            if salary:
+                print(f"{salary}")
     except Exception as e:
-        sys.stderr.write("Error processing line: {0} - {1}\n".format(line, str(e)))
+        sys.stderr.write(f"Error processing line: {line} - {str(e)}\n")
         continue
+
 ````
 ````bash
 nano reducer.py
@@ -96,31 +98,30 @@ and added the below code:
 ````
 #!/usr/bin/env python
 import sys
-highest_score = float('-inf')
-lowest_score = float('inf')
-for line in sys.stdin:
-    line = line.strip()
-    try:
-        score = float(line)
-        if score > highest_score:
-            highest_score = score
-        if score < lowest_score:
-            lowest_score = score
-    except ValueError:
 
-        sys.stderr.write("Skipping invalid score: {0}\n".format(line))
+highest_salary = float('-inf')
+lowest_salary = float('inf')
+
+for line in sys.stdin:
+    try:
+        salary = float(line.strip())
+        highest_salary = max(highest_salary, salary)
+        lowest_salary = min(lowest_salary, salary)
+    except ValueError:
+        sys.stderr.write(f"Skipping invalid salary: {line}\n")
         continue
 
-print('Highest Score: {0}'.format(highest_score))
-print('Lowest Score: {0}'.format(lowest_score))
+print(f"Highest Salary: {highest_salary}")
+print(f"Lowest Salary: {lowest_salary}")
+````
 Press ctrl+x, type Y and press enter to close nano.
 ````
-After adding the codes to local scripts we need to make sure the input file is also added to the home scripts
+## After adding the codes to local scripts we need to make sure the input file is also added to the home scripts
 ````
 hadoop fs -get /home/datasrc/bigDataTask/Books_rating.csv /home/scripts/
 ````
 
-Submited the MapReduce Job to YARN
+## Submited the MapReduce Job to YARN
 ````
 hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2.jar \
     -D mapreduce.job.name="FindHighestAndLowestSalaries" \
@@ -129,19 +130,16 @@ hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2
     -mapper "python3 /home/scripts/mapper.py" \
     -reducer "python3 /home/scripts/reducer.py"
 ````
-Submited the MapReduce Job to YARN to see the job running time
+## Submited the MapReduce Job to YARN to see the job running time
 ````
 time hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2.jar -D mapreduce.job.name="FindHighestAndLowestSalaries" -input /home/datasrc/bigDataTask/retailstore_large.csv -output /home/dataout -mapper "python3 /home/scripts/mapper.py" -reducer "python3 /home/scripts/reducer.py"
 
-
 ````
-
-
-View the Results
+## View the Results
 ````
 hadoop fs -cat /home/dataout/part-00000
 ````
-Important
+## Important
 
 I tested my scripts mapper.py and reducer.py locally before i submit it to the YARN, and ensure that it works as expected.
 ````
@@ -155,6 +153,52 @@ To view the output of reducer, better to use below syntax
 ````
 echo -e "35000\n37000\n39000\n17600" | python3 /home/scripts/reducer.py
 ````
+````
+## Next i proceeded with Spark job e.g displaying data, filtering based on salary, and calculating average salary by country
+
+## Created python file
+````
+touch spark_job.py
+````
+## To make it executable, i used chmod
+````
+chmod +x spark_job.py
+````
+## entered the code with nano
+````
+nano spark_job.py
+````
+add this code
+````
+from pyspark.sql import SparkSession
+
+# Initialize Spark session
+spark = SparkSession.builder.appName("FindHighestAndLowestSalaries").getOrCreate()
+
+# Load the dataset from HDFS
+data = spark.read.csv("/home/datasrc/bigDataTask/retailstore_large.csv", header=False, inferSchema=True)
+
+# Rename columns for better readability (assuming the salary is in the third column)
+data = data.withColumnRenamed("_c2", "Salary")
+
+# Calculate the highest and lowest salaries
+highest_salary = data.agg({"Salary": "max"}).collect()[0][0]
+lowest_salary = data.agg({"Salary": "min"}).collect()[0][0]
+
+# Print the results
+print(f"Highest Salary: {highest_salary}")
+print(f"Lowest Salary: {lowest_salary}")
+
+# Stop the Spark session
+spark.stop()
+````
+
+## Run the job with time function
+````
+time spark-submit /path/to/spark_job.py
+````
+
+
 
 
 
