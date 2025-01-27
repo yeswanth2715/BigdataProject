@@ -149,9 +149,14 @@ Important
 I tested my scripts mapper.py and reducer.py locally before i submit it to the YARN, and ensure that it works as expected.
 ````
 cat /home/datasrc/bigDataTask/retailstore_large.csv | python /home/scripts/mapper.py
+````
 and
-
+````
 cat /home/datasrc/bigDataTask/retailstore_large.csv | python /home/scripts/reducer.py
+````
+To view the output of reducer, better to use below syntax
+````
+echo -e "35000\n37000\n39000\n17600" | python3 /home/scripts/reducer.py
 ````
 
 
