@@ -151,11 +151,11 @@ Important
 
 I tested my scripts mapper.py and reducer.py locally before i submit it to the YARN, and ensure that it works as expected.
 ````
-cat /home/datasrc/bigDataTask/retailstore_large.csv | python /home/scripts/mapper.py
+cat /home/datasrc/bigDataTask/retailstore_large.csv | python3 /home/scripts/mapper.py
 ````
 and
 ````
-cat /home/datasrc/bigDataTask/retailstore_large.csv | python /home/scripts/reducer.py
+cat /home/datasrc/bigDataTask/retailstore_large.csv | python3 /home/scripts/reducer.py
 ````
 To view the output of reducer, better to use below syntax
 ````
