@@ -123,13 +123,13 @@ print(f"Highest Salary: {highest_salary}")
 print(f"Lowest Salary: {lowest_salary}")
 ````
 Press ctrl+x, type Y and press enter to close nano.
-````
-##  verify the mapper and reducer in home scripts
+
+verify the mapper and reducer in home scripts
 ````
 ls -l /home/scripts
 ````
 
-## Submited the MapReduce Job to YARN
+Submited the MapReduce Job to YARN
 ````
 hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2.jar \
     -D mapreduce.job.name="FindHighestAndLowestSalaries" \
@@ -138,17 +138,17 @@ hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2
     -mapper "python3 /home/scripts/mapper.py" \
     -reducer "python3 /home/scripts/reducer.py"
 ````
-## Submited the MapReduce Job to YARN to see the job running time
+Submited the MapReduce Job to YARN to see the job running time
 ````
 time hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-2.9.2.jar -D mapreduce.job.name="FindHighestAndLowestSalaries" -input /home/datasrc/bigDataTask/retailstore_large.csv -output /home/dataout -mapper "python3 /home/scripts/mapper.py" -reducer "python3 /home/scripts/reducer.py"
 
 ````
-## View the Results
+View the Results
 ````
 hadoop fs -cat /home/dataout/part-00000
 ````
-## Important
-````
+Important
+
 I tested my scripts mapper.py and reducer.py locally before i submit it to the YARN, and ensure that it works as expected.
 ````
 cat /home/datasrc/bigDataTask/retailstore_large.csv | python /home/scripts/mapper.py
@@ -161,7 +161,7 @@ To view the output of reducer, better to use below syntax
 ````
 echo -e "35000\n37000\n39000\n17600" | python3 /home/scripts/reducer.py
 ````
-````
+
 Next i proceeded with Spark job e.g displaying data, filtering based on salary, and calculating average salary by country
 
 Created python file
