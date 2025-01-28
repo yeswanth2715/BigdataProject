@@ -116,9 +116,10 @@ print(f"Lowest Salary: {lowest_salary}")
 ````
 Press ctrl+x, type Y and press enter to close nano.
 ````
-## After adding the codes to local scripts we need to make sure the input file is also added to the home scripts
+##  adding the codes to local scripts
 ````
-hadoop fs -get /home/datasrc/bigDataTask/Books_rating.csv /home/scripts/
+hadoop fs -put mapper.py /home/scripts/
+hadoop fs -put reducer.py /home/scripts/
 ````
 
 ## Submited the MapReduce Job to YARN
@@ -140,7 +141,7 @@ time hadoop jar /usr/local/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-streaming-
 hadoop fs -cat /home/dataout/part-00000
 ````
 ## Important
-
+````
 I tested my scripts mapper.py and reducer.py locally before i submit it to the YARN, and ensure that it works as expected.
 ````
 cat /home/datasrc/bigDataTask/retailstore_large.csv | python /home/scripts/mapper.py
