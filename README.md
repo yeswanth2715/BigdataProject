@@ -63,8 +63,16 @@ Check the Number of Blocks
 hadoop fsck /home/datasrc/bigDataTask
 ````
 
+Create a directory, for instance, /home/scripts
+````
+mkdir -p /home/scripts
+````
+and navigate to this directory using cd /home/scripts command. Create the Mapper **touch mapper.py** and Reducer **touch reducer.py** and change their permission:
+````bash
+chmod +x mapper.py
+chmod +x reducer.py
 
-Create a directory, for instance, /home/scripts and navigate to this directory using cd /home/scripts command. Create the Mapper touch mapper.py and Reducer touch reducer.py and change their permission:
+````bash
 
 ````bash
 chmod 777 mapper.py reducer.py
@@ -116,10 +124,9 @@ print(f"Lowest Salary: {lowest_salary}")
 ````
 Press ctrl+x, type Y and press enter to close nano.
 ````
-##  adding the codes to local scripts
+##  verify the mapper and reducer in home scripts
 ````
-hadoop fs -put mapper.py /home/scripts/
-hadoop fs -put reducer.py /home/scripts/
+ls -l /home/scripts
 ````
 
 ## Submited the MapReduce Job to YARN
