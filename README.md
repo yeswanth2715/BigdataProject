@@ -203,7 +203,7 @@ spark.stop()
 
 Run the job with time function
 ````
-time spark-submit /path/to/spark_job.py
+time spark-submit spark_job.py
 ````
 
 
