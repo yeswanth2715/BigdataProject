@@ -31,7 +31,8 @@ Step 2: Prepare the Dataset
 Download and unzip the  retail store dataset on your local machine.
 
 Step 3: Copy the Dataset to Docker
-My container ID 422b17bd68e240f6c4c30c5554527269411314c5d6454696d596925d24b14969 and run to root and from root to hdfs
+
+For eg container ID 422b17bd68e240f6c4c30c5554527269411314c5d6454696d596925d24b14969 and run to root and from root to hdfs
 Copy the File to the Docker Container: Use the docker cp command to copy the file into the container.
 
 ````
